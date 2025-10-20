@@ -1,5 +1,6 @@
 "use client"
 
+import { formatInTimeZone } from "date-fns-tz"
 import { useEffect, useState } from "react"
 import type {
   FieldSchema,
@@ -116,7 +117,12 @@ export function SubmissionsRealTime({
                   }`}
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
-                    {new Date(submission.submittedAt).toLocaleString()}
+                    {formatInTimeZone(
+                      submission.submittedAt,
+                      "UTC",
+                      "MMM d, yyyy HH:mm:ss"
+                    )}{" "}
+                    UTC
                   </td>
                   {formFields.map((field) => {
                     const value = submission.data[field.id]

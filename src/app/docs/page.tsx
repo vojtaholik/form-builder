@@ -7,7 +7,7 @@ import { CopyButton } from "./copy-button"
 export default async function DocsPage() {
   const forms = await getAllForms()
   const exampleFormId = forms[0]?.id || "your-form-id"
-  const apiKey = process.env.SUBMIT_API_KEY || "your-api-key"
+  const apiKey = "your-api-key"
 
   return (
     <div className="min-h-screen bg-zinc-50">

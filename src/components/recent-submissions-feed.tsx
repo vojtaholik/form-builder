@@ -1,5 +1,6 @@
 "use client"
 
+import { formatInTimeZone } from "date-fns-tz"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import type { SubmissionNotification } from "@/lib/types"
@@ -118,7 +119,12 @@ export function RecentSubmissionsFeed() {
                       {submission.formTitle}
                     </p>
                     <p className="text-xs text-zinc-500">
-                      {new Date(submission.submittedAt).toLocaleString()}
+                      {formatInTimeZone(
+                        submission.submittedAt,
+                        "UTC",
+                        "MMM d, yyyy HH:mm"
+                      )}{" "}
+                      UTC
                     </p>
                   </div>
                   {isNew && (
