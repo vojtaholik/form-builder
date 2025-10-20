@@ -14,12 +14,20 @@
     "indentStyle": "space",
     "indentWidth": 2
   },
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded"
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off"
+      },
+      "a11y": {
+        "useSemanticElements": "off"
       }
     },
     "domains": {
