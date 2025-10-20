@@ -68,11 +68,6 @@ export function SubmissionsRealTime({
         setTimeout(connectToStream, 1)
       })
 
-      // Handle connection close and reconnect
-      eventSource.onclose = () => {
-        setTimeout(connectToStream, 1)
-      }
-
       return eventSource
     }
 

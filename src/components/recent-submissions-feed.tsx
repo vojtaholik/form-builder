@@ -66,12 +66,6 @@ export function RecentSubmissionsFeed() {
         setTimeout(connectToStream, 1)
       })
 
-      // Handle connection close and reconnect
-      eventSource.onclose = () => {
-        setIsConnected(false)
-        setTimeout(connectToStream, 1)
-      }
-
       return eventSource
     }
 
