@@ -2,6 +2,14 @@
 
 import { formatInTimeZone } from "date-fns-tz"
 import { useEffect, useState } from "react"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import type {
   FieldSchema,
   SubmissionNotification,
@@ -86,71 +94,69 @@ export function SubmissionsRealTime({
 
   return (
     <div className="bg-white rounded-lg border overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-zinc-50 border-b">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                Submitted At
-              </th>
-              {formFields.map((field) => (
-                <th
-                  key={field.id}
-                  className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider"
-                >
-                  {field.label}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {submissions.map((submission) => {
-              const isNew = newSubmissionIds.has(submission.id)
+      <Table>
+        <TableHeader className="bg-zinc-50">
+          <TableRow>
+            <TableHead className="px-6 py-3 text-xs font-medium text-zinc-500 uppercase tracking-wider">
+              Submitted At
+            </TableHead>
+            {formFields.map((field) => (
+              <TableHead
+                key={field.id}
+                className="px-6 py-3 text-xs font-medium text-zinc-500 uppercase tracking-wider"
+              >
+                {field.label}
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {submissions.map((submission) => {
+            const isNew = newSubmissionIds.has(submission.id)
 
-              return (
-                <tr
-                  key={submission.id}
-                  className={`hover:bg-zinc-50 transition-all duration-500 ${
-                    isNew
-                      ? "animate-[slideDown_0.3s_ease-out] bg-gradient-to-r from-green-50 to-transparent"
-                      : ""
-                  }`}
-                >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
-                    {formatInTimeZone(
-                      submission.submittedAt,
-                      "UTC",
-                      "MMM d, yyyy HH:mm:ss"
-                    )}{" "}
-                    UTC
-                  </td>
-                  {formFields.map((field) => {
-                    const value = submission.data[field.id]
-                    let displayValue = "-"
+            return (
+              <TableRow
+                key={submission.id}
+                className={`transition-all duration-500 ${
+                  isNew
+                    ? "animate-[slideDown_0.3s_ease-out] bg-gradient-to-r from-green-50 to-transparent"
+                    : ""
+                }`}
+              >
+                <TableCell className="px-6 py-4 text-sm text-zinc-500">
+                  {formatInTimeZone(
+                    submission.submittedAt,
+                    "UTC",
+                    "MMM d, yyyy HH:mm:ss"
+                  )}{" "}
+                  UTC
+                </TableCell>
+                {formFields.map((field) => {
+                  const value = submission.data[field.id]
+                  let displayValue = "-"
 
-                    if (value !== undefined && value !== null) {
-                      if (Array.isArray(value)) {
-                        displayValue = value.join(", ")
-                      } else {
-                        displayValue = String(value)
-                      }
+                  if (value !== undefined && value !== null) {
+                    if (Array.isArray(value)) {
+                      displayValue = value.join(", ")
+                    } else {
+                      displayValue = String(value)
                     }
+                  }
 
-                    return (
-                      <td
-                        key={field.id}
-                        className="px-6 py-4 text-sm text-zinc-900"
-                      >
-                        {displayValue}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
+                  return (
+                    <TableCell
+                      key={field.id}
+                      className="px-6 py-4 text-sm text-zinc-900"
+                    >
+                      {displayValue}
+                    </TableCell>
+                  )
+                })}
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
     </div>
   )
 }

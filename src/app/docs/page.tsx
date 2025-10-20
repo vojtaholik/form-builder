@@ -1,8 +1,8 @@
-import { ArrowLeft, Copy } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { getAllForms } from "@/lib/redis"
-import { CopyButton } from "./copy-button"
+import { CodeBlock } from "./code-block"
 
 export default async function DocsPage() {
   const forms = await getAllForms()
@@ -74,43 +74,22 @@ export default async function DocsPage() {
               <p className="text-zinc-600 mb-4">List all form IDs.</p>
 
               <div className="space-y-3">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-sm">cURL</h4>
-                    <CopyButton
-                      text={`curl -X GET "${
-                        process.env.VERCEL_URL || "https://your-domain.com"
-                      }/api/forms"`}
-                    />
-                  </div>
-                  <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{`curl -X GET "${
-                      process.env.VERCEL_URL || "https://your-domain.com"
-                    }/api/forms"`}</code>
-                  </pre>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-sm">
-                      JavaScript (fetch)
-                    </h4>
-                    <CopyButton
-                      text={`fetch('${
-                        process.env.VERCEL_URL || "https://your-domain.com"
-                      }/api/forms')
+                <CodeBlock
+                  title="cURL"
+                  language="bash"
+                  code={`curl -X GET "${
+                    process.env.VERCEL_URL || "https://your-domain.com"
+                  }/api/forms"`}
+                />
+                <CodeBlock
+                  title="JavaScript (fetch)"
+                  language="javascript"
+                  code={`fetch('${
+                    process.env.VERCEL_URL || "https://your-domain.com"
+                  }/api/forms')
   .then(res => res.json())
   .then(data => console.log(data));`}
-                    />
-                  </div>
-                  <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{`fetch('${
-                      process.env.VERCEL_URL || "https://your-domain.com"
-                    }/api/forms')
-  .then(res => res.json())
-  .then(data => console.log(data));`}</code>
-                  </pre>
-                </div>
+                />
               </div>
             </div>
 
@@ -125,43 +104,22 @@ export default async function DocsPage() {
               <p className="text-zinc-600 mb-4">Get form schema by ID.</p>
 
               <div className="space-y-3">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-sm">cURL</h4>
-                    <CopyButton
-                      text={`curl -X GET "${
-                        process.env.VERCEL_URL || "https://your-domain.com"
-                      }/api/forms/${exampleFormId}"`}
-                    />
-                  </div>
-                  <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{`curl -X GET "${
-                      process.env.VERCEL_URL || "https://your-domain.com"
-                    }/api/forms/${exampleFormId}"`}</code>
-                  </pre>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-sm">
-                      JavaScript (fetch)
-                    </h4>
-                    <CopyButton
-                      text={`fetch('${
-                        process.env.VERCEL_URL || "https://your-domain.com"
-                      }/api/forms/${exampleFormId}')
+                <CodeBlock
+                  title="cURL"
+                  language="bash"
+                  code={`curl -X GET "${
+                    process.env.VERCEL_URL || "https://your-domain.com"
+                  }/api/forms/${exampleFormId}"`}
+                />
+                <CodeBlock
+                  title="JavaScript (fetch)"
+                  language="javascript"
+                  code={`fetch('${
+                    process.env.VERCEL_URL || "https://your-domain.com"
+                  }/api/forms/${exampleFormId}')
   .then(res => res.json())
   .then(data => console.log(data));`}
-                    />
-                  </div>
-                  <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{`fetch('${
-                      process.env.VERCEL_URL || "https://your-domain.com"
-                    }/api/forms/${exampleFormId}')
-  .then(res => res.json())
-  .then(data => console.log(data));`}</code>
-                  </pre>
-                </div>
+                />
               </div>
             </div>
 
@@ -183,43 +141,22 @@ export default async function DocsPage() {
               </p>
 
               <div className="space-y-3">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-sm">cURL</h4>
-                    <CopyButton
-                      text={`curl -X GET "${
-                        process.env.VERCEL_URL || "https://your-domain.com"
-                      }/api/forms/${exampleFormId}/submissions?limit=20&offset=0"`}
-                    />
-                  </div>
-                  <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{`curl -X GET "${
-                      process.env.VERCEL_URL || "https://your-domain.com"
-                    }/api/forms/${exampleFormId}/submissions?limit=20&offset=0"`}</code>
-                  </pre>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-sm">
-                      JavaScript (fetch)
-                    </h4>
-                    <CopyButton
-                      text={`fetch('${
-                        process.env.VERCEL_URL || "https://your-domain.com"
-                      }/api/forms/${exampleFormId}/submissions?limit=20&offset=0')
+                <CodeBlock
+                  title="cURL"
+                  language="bash"
+                  code={`curl -X GET "${
+                    process.env.VERCEL_URL || "https://your-domain.com"
+                  }/api/forms/${exampleFormId}/submissions?limit=20&offset=0"`}
+                />
+                <CodeBlock
+                  title="JavaScript (fetch)"
+                  language="javascript"
+                  code={`fetch('${
+                    process.env.VERCEL_URL || "https://your-domain.com"
+                  }/api/forms/${exampleFormId}/submissions?limit=20&offset=0')
   .then(res => res.json())
   .then(data => console.log(data));`}
-                    />
-                  </div>
-                  <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{`fetch('${
-                      process.env.VERCEL_URL || "https://your-domain.com"
-                    }/api/forms/${exampleFormId}/submissions?limit=20&offset=0')
-  .then(res => res.json())
-  .then(data => console.log(data));`}</code>
-                  </pre>
-                </div>
+                />
               </div>
             </div>
 
@@ -240,37 +177,22 @@ export default async function DocsPage() {
               </p>
 
               <div className="space-y-3">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-sm">cURL</h4>
-                    <CopyButton
-                      text={`curl -X POST "${
-                        process.env.VERCEL_URL || "https://your-domain.com"
-                      }/api/forms/${exampleFormId}/submissions" \\
+                <CodeBlock
+                  title="cURL"
+                  language="bash"
+                  code={`curl -X POST "${
+                    process.env.VERCEL_URL || "https://your-domain.com"
+                  }/api/forms/${exampleFormId}/submissions" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: ${apiKey}" \\
   -d '{"field_id": "value"}'`}
-                    />
-                  </div>
-                  <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{`curl -X POST "${
-                      process.env.VERCEL_URL || "https://your-domain.com"
-                    }/api/forms/${exampleFormId}/submissions" \\
-  -H "Content-Type: application/json" \\
-  -H "x-api-key: ${apiKey}" \\
-  -d '{"field_id": "value"}'`}</code>
-                  </pre>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-sm">
-                      JavaScript (fetch)
-                    </h4>
-                    <CopyButton
-                      text={`fetch('${
-                        process.env.VERCEL_URL || "https://your-domain.com"
-                      }/api/forms/${exampleFormId}/submissions', {
+                />
+                <CodeBlock
+                  title="JavaScript (fetch)"
+                  language="javascript"
+                  code={`fetch('${
+                    process.env.VERCEL_URL || "https://your-domain.com"
+                  }/api/forms/${exampleFormId}/submissions', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -282,25 +204,7 @@ export default async function DocsPage() {
 })
   .then(res => res.json())
   .then(data => console.log(data));`}
-                    />
-                  </div>
-                  <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{`fetch('${
-                      process.env.VERCEL_URL || "https://your-domain.com"
-                    }/api/forms/${exampleFormId}/submissions', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'x-api-key': '${apiKey}'
-  },
-  body: JSON.stringify({
-    field_id: 'value'
-  })
-})
-  .then(res => res.json())
-  .then(data => console.log(data));`}</code>
-                  </pre>
-                </div>
+                />
               </div>
             </div>
           </section>
@@ -312,25 +216,23 @@ export default async function DocsPage() {
               All API responses follow this structure:
             </p>
             <div className="space-y-4">
-              <div>
-                <h4 className="font-semibold mb-2">Success Response</h4>
-                <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                  <code>{`{
+              <CodeBlock
+                title="Success Response"
+                language="json"
+                code={`{
   "success": true,
   "data": { ... }
-}`}</code>
-                </pre>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">Error Response</h4>
-                <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
-                  <code>{`{
+}`}
+              />
+              <CodeBlock
+                title="Error Response"
+                language="json"
+                code={`{
   "success": false,
   "error": "Error message",
   "details": [ ... ] // Optional validation errors
-}`}</code>
-                </pre>
-              </div>
+}`}
+              />
             </div>
           </section>
         </div>

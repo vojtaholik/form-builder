@@ -1,19 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 import { type Field, FieldEditor } from "@/components/field-editor"
 import { Accordion } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
+import { ButtonGroup } from "@/components/ui/button-group"
 import { FieldContent } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import type { FieldType, FormSchema } from "@/lib/types"
 
@@ -82,19 +77,19 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
 
   const handleSave = async () => {
     if (!title.trim()) {
-      alert("Title is required")
+      toast.error("Title is required")
       return
     }
 
     if (fields.length === 0) {
-      alert("At least one field is required")
+      toast.error("At least one field is required")
       return
     }
 
     // Validate all fields have labels
     const invalidFields = fields.filter((f) => !f.label.trim())
     if (invalidFields.length > 0) {
-      alert("All fields must have labels")
+      toast.error("All fields must have labels")
       return
     }
 
@@ -105,7 +100,7 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
         (!f.options || f.options.length === 0)
     )
     if (invalidOptions.length > 0) {
-      alert("Radio and multi-select fields must have at least one option")
+      toast.error("Radio and multi-select fields must have at least one option")
       return
     }
 
@@ -156,16 +151,17 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold">Fields</h3>
-          <Select onValueChange={(value) => addField(value as FieldType)}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Add field" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="text">Text Input</SelectItem>
-              <SelectItem value="radio">Radio Buttons</SelectItem>
-              <SelectItem value="multi">Multi-select</SelectItem>
-            </SelectContent>
-          </Select>
+          <ButtonGroup>
+            <Button variant="outline" onClick={() => addField("text")}>
+              Text Input
+            </Button>
+            <Button variant="outline" onClick={() => addField("radio")}>
+              Radio Buttons
+            </Button>
+            <Button variant="outline" onClick={() => addField("multi")}>
+              Multi-select
+            </Button>
+          </ButtonGroup>
         </div>
 
         {fields.length === 0 ? (

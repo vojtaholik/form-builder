@@ -1,11 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import type { FormSchema } from "@/lib/types"
 
 interface FormRendererProps {
@@ -20,35 +22,36 @@ export function FormRenderer({ form, onSubmit }: FormRendererProps) {
 
   // Build validation schema from form fields
   const validationSchema = z.object(
-    form.fields.reduce(
-      (acc, field) => {
-        let fieldSchema: z.ZodTypeAny = z.any()
+    form.fields.reduce((acc, field) => {
+      let fieldSchema: z.ZodTypeAny = z.any()
 
-        if (field.type === "text") {
-          fieldSchema = z.string().min(1, "This field is required")
-        } else if (field.type === "radio") {
-          if (field.options && field.options.length > 0) {
-            fieldSchema = z.enum(field.options as [string, ...string[]], {
-              message: "Please select an option",
-            })
-          } else {
-            fieldSchema = z.string().min(1, "Please select an option")
-          }
-        } else if (field.type === "multi") {
-          fieldSchema = z
-            .array(z.string())
-            .min(1, "Please select at least one option")
+      if (field.type === "text") {
+        fieldSchema = field.required
+          ? z.preprocess(
+              (val) => val ?? "",
+              z.string().min(1, "This field is required")
+            )
+          : z.string().optional()
+      } else if (field.type === "radio") {
+        if (field.options && field.options.length > 0) {
+          fieldSchema = z.enum(field.options as [string, ...string[]], {
+            message: "Please select an option",
+          })
+        } else {
+          fieldSchema = z.string().min(1, "Please select an option")
         }
-
         if (!field.required) {
           fieldSchema = fieldSchema.optional()
         }
+      } else if (field.type === "multi") {
+        fieldSchema = field.required
+          ? z.array(z.string()).min(1, "Please select at least one option")
+          : z.array(z.string()).optional()
+      }
 
-        acc[field.id] = fieldSchema
-        return acc
-      },
-      {} as Record<string, z.ZodTypeAny>,
-    ),
+      acc[field.id] = fieldSchema
+      return acc
+    }, {} as Record<string, z.ZodTypeAny>)
   )
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,8 +75,8 @@ export function FormRenderer({ form, onSubmit }: FormRendererProps) {
       await onSubmit(result.data)
       setFormData({})
       setErrors({})
-    } catch (error) {
-      alert("Failed to submit form. Please try again.")
+    } catch {
+      toast.error("Failed to submit form. Please try again.")
     } finally {
       setSubmitting(false)
     }
@@ -118,18 +121,13 @@ export function FormRenderer({ form, onSubmit }: FormRendererProps) {
           )}
 
           {field.type === "radio" && (
-            <div className="space-y-2">
+            <RadioGroup
+              value={formData[field.id] as string}
+              onValueChange={(value) => updateField(field.id, value)}
+            >
               {field.options?.map((option) => (
                 <div key={option} className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    id={`${field.id}-${option}`}
-                    name={field.id}
-                    value={option}
-                    checked={formData[field.id] === option}
-                    onChange={(e) => updateField(field.id, e.target.value)}
-                    className="w-4 h-4"
-                  />
+                  <RadioGroupItem value={option} id={`${field.id}-${option}`} />
                   <Label
                     htmlFor={`${field.id}-${option}`}
                     className="font-normal"
@@ -138,7 +136,7 @@ export function FormRenderer({ form, onSubmit }: FormRendererProps) {
                   </Label>
                 </div>
               ))}
-            </div>
+            </RadioGroup>
           )}
 
           {field.type === "multi" && (
@@ -148,7 +146,7 @@ export function FormRenderer({ form, onSubmit }: FormRendererProps) {
                   <Checkbox
                     id={`${field.id}-${option}`}
                     checked={((formData[field.id] as string[]) || []).includes(
-                      option,
+                      option
                     )}
                     onCheckedChange={() => toggleMultiOption(field.id, option)}
                   />
