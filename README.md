@@ -50,7 +50,7 @@ Required environment variables:
 - `UPSTASH_REDIS_REST_URL`: Your Upstash Redis REST URL
 - `UPSTASH_REDIS_REST_TOKEN`: Your Upstash Redis REST token
 - `SUBMIT_API_KEY`: Secret key for external API submissions
-- `NEXT_PUBLIC_BASE_URL`: (Optional) Base URL for API docs
+- `VERCEL_URL`: (Optional) Base URL for API docs
 
 4. Run the development server:
 

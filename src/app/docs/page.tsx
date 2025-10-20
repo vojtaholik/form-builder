@@ -37,7 +37,7 @@ export default async function DocsPage() {
             <div className="bg-zinc-50 p-4 rounded-lg">
               <div className="font-mono text-sm">
                 <strong>Base URL:</strong>{" "}
-                {process.env.NEXT_PUBLIC_BASE_URL || "https://your-domain.com"}
+                {process.env.VERCEL_URL || "https://your-domain.com"}
               </div>
             </div>
           </section>
@@ -79,15 +79,13 @@ export default async function DocsPage() {
                     <h4 className="font-semibold text-sm">cURL</h4>
                     <CopyButton
                       text={`curl -X GET "${
-                        process.env.NEXT_PUBLIC_BASE_URL ||
-                        "https://your-domain.com"
+                        process.env.VERCEL_URL || "https://your-domain.com"
                       }/api/forms"`}
                     />
                   </div>
                   <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{`curl -X GET "${
-                      process.env.NEXT_PUBLIC_BASE_URL ||
-                      "https://your-domain.com"
+                      process.env.VERCEL_URL || "https://your-domain.com"
                     }/api/forms"`}</code>
                   </pre>
                 </div>
@@ -99,8 +97,7 @@ export default async function DocsPage() {
                     </h4>
                     <CopyButton
                       text={`fetch('${
-                        process.env.NEXT_PUBLIC_BASE_URL ||
-                        "https://your-domain.com"
+                        process.env.VERCEL_URL || "https://your-domain.com"
                       }/api/forms')
   .then(res => res.json())
   .then(data => console.log(data));`}
@@ -108,8 +105,7 @@ export default async function DocsPage() {
                   </div>
                   <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{`fetch('${
-                      process.env.NEXT_PUBLIC_BASE_URL ||
-                      "https://your-domain.com"
+                      process.env.VERCEL_URL || "https://your-domain.com"
                     }/api/forms')
   .then(res => res.json())
   .then(data => console.log(data));`}</code>
@@ -134,15 +130,13 @@ export default async function DocsPage() {
                     <h4 className="font-semibold text-sm">cURL</h4>
                     <CopyButton
                       text={`curl -X GET "${
-                        process.env.NEXT_PUBLIC_BASE_URL ||
-                        "https://your-domain.com"
+                        process.env.VERCEL_URL || "https://your-domain.com"
                       }/api/forms/${exampleFormId}"`}
                     />
                   </div>
                   <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{`curl -X GET "${
-                      process.env.NEXT_PUBLIC_BASE_URL ||
-                      "https://your-domain.com"
+                      process.env.VERCEL_URL || "https://your-domain.com"
                     }/api/forms/${exampleFormId}"`}</code>
                   </pre>
                 </div>
@@ -154,8 +148,7 @@ export default async function DocsPage() {
                     </h4>
                     <CopyButton
                       text={`fetch('${
-                        process.env.NEXT_PUBLIC_BASE_URL ||
-                        "https://your-domain.com"
+                        process.env.VERCEL_URL || "https://your-domain.com"
                       }/api/forms/${exampleFormId}')
   .then(res => res.json())
   .then(data => console.log(data));`}
@@ -163,8 +156,7 @@ export default async function DocsPage() {
                   </div>
                   <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{`fetch('${
-                      process.env.NEXT_PUBLIC_BASE_URL ||
-                      "https://your-domain.com"
+                      process.env.VERCEL_URL || "https://your-domain.com"
                     }/api/forms/${exampleFormId}')
   .then(res => res.json())
   .then(data => console.log(data));`}</code>
@@ -196,15 +188,13 @@ export default async function DocsPage() {
                     <h4 className="font-semibold text-sm">cURL</h4>
                     <CopyButton
                       text={`curl -X GET "${
-                        process.env.NEXT_PUBLIC_BASE_URL ||
-                        "https://your-domain.com"
+                        process.env.VERCEL_URL || "https://your-domain.com"
                       }/api/forms/${exampleFormId}/submissions?limit=20&offset=0"`}
                     />
                   </div>
                   <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{`curl -X GET "${
-                      process.env.NEXT_PUBLIC_BASE_URL ||
-                      "https://your-domain.com"
+                      process.env.VERCEL_URL || "https://your-domain.com"
                     }/api/forms/${exampleFormId}/submissions?limit=20&offset=0"`}</code>
                   </pre>
                 </div>
@@ -216,8 +206,7 @@ export default async function DocsPage() {
                     </h4>
                     <CopyButton
                       text={`fetch('${
-                        process.env.NEXT_PUBLIC_BASE_URL ||
-                        "https://your-domain.com"
+                        process.env.VERCEL_URL || "https://your-domain.com"
                       }/api/forms/${exampleFormId}/submissions?limit=20&offset=0')
   .then(res => res.json())
   .then(data => console.log(data));`}
@@ -225,8 +214,7 @@ export default async function DocsPage() {
                   </div>
                   <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{`fetch('${
-                      process.env.NEXT_PUBLIC_BASE_URL ||
-                      "https://your-domain.com"
+                      process.env.VERCEL_URL || "https://your-domain.com"
                     }/api/forms/${exampleFormId}/submissions?limit=20&offset=0')
   .then(res => res.json())
   .then(data => console.log(data));`}</code>
@@ -257,8 +245,7 @@ export default async function DocsPage() {
                     <h4 className="font-semibold text-sm">cURL</h4>
                     <CopyButton
                       text={`curl -X POST "${
-                        process.env.NEXT_PUBLIC_BASE_URL ||
-                        "https://your-domain.com"
+                        process.env.VERCEL_URL || "https://your-domain.com"
                       }/api/forms/${exampleFormId}/submissions" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: ${apiKey}" \\
@@ -267,8 +254,7 @@ export default async function DocsPage() {
                   </div>
                   <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{`curl -X POST "${
-                      process.env.NEXT_PUBLIC_BASE_URL ||
-                      "https://your-domain.com"
+                      process.env.VERCEL_URL || "https://your-domain.com"
                     }/api/forms/${exampleFormId}/submissions" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: ${apiKey}" \\
@@ -283,8 +269,7 @@ export default async function DocsPage() {
                     </h4>
                     <CopyButton
                       text={`fetch('${
-                        process.env.NEXT_PUBLIC_BASE_URL ||
-                        "https://your-domain.com"
+                        process.env.VERCEL_URL || "https://your-domain.com"
                       }/api/forms/${exampleFormId}/submissions', {
   method: 'POST',
   headers: {
@@ -301,8 +286,7 @@ export default async function DocsPage() {
                   </div>
                   <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{`fetch('${
-                      process.env.NEXT_PUBLIC_BASE_URL ||
-                      "https://your-domain.com"
+                      process.env.VERCEL_URL || "https://your-domain.com"
                     }/api/forms/${exampleFormId}/submissions', {
   method: 'POST',
   headers: {
