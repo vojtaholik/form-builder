@@ -30,8 +30,8 @@ export default async function SubmissionsPage({
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      <div className="container mx-auto py-10 px-4 max-w-7xl grid grid-cols-12">
-        <div className="col-span-2">
+      <div className="container mx-auto lg:py-10 py-5 px-4 max-w-7xl lg:grid flex flex-col-reverse grid-cols-12">
+        <div className="col-span-2 flex lg:items-start flex-col items-center">
           <Button asChild variant="ghost" className="mb-4">
             <Link href="/">
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -39,10 +39,12 @@ export default async function SubmissionsPage({
             </Link>
           </Button>
         </div>
-        <div className="mb-8 col-span-10">
-          <div className="flex md:flex-row flex-col items-center gap-5 justify-between">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">Submissions</h1>
+        <div className="mb-8 col-span-10 w-full">
+          <div className="flex md:flex-row w-full flex-col lg:items-center gap-5 lg:justify-between">
+            <div className="flex flex-col w-full">
+              <h1 className="lg:text-4xl text-2xl font-bold lg:mb-2">
+                Submissions
+              </h1>
               <p className="text-zinc-600">
                 {form.title} - {totalCount} submission
                 {totalCount !== 1 ? "s" : ""}
