@@ -10,6 +10,7 @@ A full-featured form builder with dynamic form creation, submissions, and a publ
 - **Submissions Management**: View all form submissions with pagination
 - **Public API**: RESTful API for external integrations with API key authentication
 - **API Documentation**: Interactive docs with copy-paste examples
+- **Rate limiting**: Redis-backed rate limiting (10 req/min for writes, 50 req/min for reads)
 
 ## Tech Stack
 

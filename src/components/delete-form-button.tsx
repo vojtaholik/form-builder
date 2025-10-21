@@ -1,9 +1,9 @@
 "use client"
 
 import { Trash2 } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { toast } from "sonner"
+import { deleteFormAction } from "@/app/actions"
 import { Button } from "./ui/button"
 
 interface DeleteFormButtonProps {
@@ -12,50 +12,62 @@ interface DeleteFormButtonProps {
 }
 
 export function DeleteFormButton({ formId, formTitle }: DeleteFormButtonProps) {
-  const [isDeleting, setIsDeleting] = useState(false)
-  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+  const [isConfirming, setIsConfirming] = useState(false)
 
-  const handleDelete = async () => {
-    if (
-      !confirm(
-        `Delete "${formTitle}"? This will permanently delete the form and all its submissions. This action cannot be undone.`
-      )
-    ) {
+  const handleDelete = () => {
+    if (!isConfirming) {
+      setIsConfirming(true)
       return
     }
 
-    setIsDeleting(true)
-
-    try {
-      const response = await fetch(`/api/forms/${formId}`, {
-        method: "DELETE",
-      })
-
-      const result = await response.json()
+    startTransition(async () => {
+      const result = await deleteFormAction(formId)
 
       if (!result.success) {
         toast.error(result.error || "Failed to delete form")
-        return
+      } else {
+        toast.success("Form deleted successfully")
       }
+      setIsConfirming(false)
+    })
+  }
 
-      toast.success("Form deleted successfully")
-      router.refresh()
-    } catch (_error) {
-      toast.error("Failed to delete form")
-    } finally {
-      setIsDeleting(false)
-    }
+  const handleCancel = () => {
+    setIsConfirming(false)
+  }
+
+  if (isConfirming) {
+    return (
+      <div className="flex gap-2 items-center">
+        <span className="text-sm text-red-600 font-medium">
+          Delete &quot;{formTitle}&quot;?
+        </span>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleDelete}
+          disabled={isPending}
+          className="border-red-600 text-red-600 hover:bg-red-50"
+        >
+          {isPending ? "Deleting..." : "Confirm"}
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleCancel}
+          disabled={isPending}
+        >
+          Cancel
+        </Button>
+      </div>
+    )
   }
 
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={handleDelete}
-      disabled={isDeleting}
-    >
+    <Button variant="outline" size="sm" onClick={handleDelete}>
       <Trash2 className="h-4 w-4 mr-1" />
-      {isDeleting ? "Deleting..." : "Delete"}
+      Delete
     </Button>
   )
 }
