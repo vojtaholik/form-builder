@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
+import { rateLimit, readLimiter, writeLimiter } from "@/lib/ratelimit"
 import { createSubmission, getForm, getSubmissions, redis } from "@/lib/redis"
 import type { SubmissionNotification } from "@/lib/types"
 
@@ -7,6 +8,10 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Rate limiting
+  const rateLimitResponse = await rateLimit(request, readLimiter)
+  if (rateLimitResponse) return rateLimitResponse
+
   try {
     const { id } = await params
     const { searchParams } = new URL(request.url)
@@ -45,6 +50,10 @@ export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Rate limiting
+  const rateLimitResponse = await rateLimit(request, writeLimiter)
+  if (rateLimitResponse) return rateLimitResponse
+
   try {
     const { id } = await params
 

@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server"
-import { deleteForm, getForm } from "@/lib/redis"
+import { rateLimit, readLimiter } from "@/lib/ratelimit"
+import { getForm } from "@/lib/redis"
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Rate limiting
+  const rateLimitResponse = await rateLimit(request, readLimiter)
+  if (rateLimitResponse) return rateLimitResponse
+
   try {
     const { id } = await params
     const form = await getForm(id)

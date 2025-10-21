@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server"
+import { rateLimit, writeLimiter } from "@/lib/ratelimit"
 import { getForm, updateForm } from "@/lib/redis"
 import { FormSchema } from "@/lib/types"
 
 export async function PUT(
   request: Request,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  // Rate limiting
+  const rateLimitResponse = await rateLimit(request, writeLimiter)
+  if (rateLimitResponse) return rateLimitResponse
+
   try {
     const { id } = await params
     const body = await request.json()
@@ -18,7 +23,7 @@ export async function PUT(
           success: false,
           error: "Form not found",
         },
-        { status: 404 },
+        { status: 404 }
       )
     }
 
@@ -31,7 +36,7 @@ export async function PUT(
           error: "Validation failed",
           details: validationResult.error.issues,
         },
-        { status: 400 },
+        { status: 400 }
       )
     }
 
@@ -41,13 +46,13 @@ export async function PUT(
       success: true,
       data: validationResult.data,
     })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         success: false,
         error: "Failed to update form",
       },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }
