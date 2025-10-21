@@ -1,5 +1,7 @@
 "use client"
 
+import { Plus } from "lucide-react"
+
 import { useState } from "react"
 import { toast } from "sonner"
 import { type Field, FieldEditor } from "@/components/field-editor"
@@ -149,17 +151,17 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
       </div>
 
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex md:flex-row flex-col md:items-center gap-2 justify-between">
           <h3 className="text-lg font-semibold">Fields</h3>
           <ButtonGroup>
             <Button variant="outline" onClick={() => addField("text")}>
-              Text Input
+              <Plus className="size-3" /> Text Input
             </Button>
             <Button variant="outline" onClick={() => addField("radio")}>
-              Radio Buttons
+              <Plus className="size-3" /> Radio Buttons
             </Button>
             <Button variant="outline" onClick={() => addField("multi")}>
-              Multi-select
+              <Plus className="size-3" /> Multi-select
             </Button>
           </ButtonGroup>
         </div>

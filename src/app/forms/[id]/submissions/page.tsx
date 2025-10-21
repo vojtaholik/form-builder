@@ -30,15 +30,17 @@ export default async function SubmissionsPage({
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      <div className="container mx-auto py-12 px-4 max-w-6xl">
-        <div className="mb-8">
+      <div className="container mx-auto py-10 px-4 max-w-7xl grid grid-cols-12">
+        <div className="col-span-2">
           <Button asChild variant="ghost" className="mb-4">
             <Link href="/">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Forms
             </Link>
           </Button>
-          <div className="flex items-center justify-between">
+        </div>
+        <div className="mb-8 col-span-10">
+          <div className="flex md:flex-row flex-col items-center gap-5 justify-between">
             <div>
               <h1 className="text-4xl font-bold mb-2">Submissions</h1>
               <p className="text-zinc-600">
@@ -53,62 +55,65 @@ export default async function SubmissionsPage({
               </Link>
             </Button>
           </div>
-        </div>
-
-        {submissions.length === 0 ? (
-          <div className="bg-white rounded-lg border-2 border-dashed p-12 text-center">
-            <h2 className="text-xl font-semibold mb-2">No submissions yet</h2>
-            <p className="text-zinc-600 mb-6">
-              Submissions will appear here once users fill out your form
-            </p>
-            <Button asChild>
-              <Link href={`/forms/${id}`}>
-                <ExternalLink className="h-4 w-4 mr-2" />
-                View Form
-              </Link>
-            </Button>
-          </div>
-        ) : (
-          <>
-            <SubmissionsRealTime
-              formId={id}
-              initialSubmissions={submissions}
-              formFields={form.fields}
-            />
-
-            {totalPages > 1 && (
-              <div className="mt-6 flex items-center justify-between">
-                <div className="text-sm text-zinc-600">
-                  Page {currentPage} of {totalPages}
-                </div>
-                <div className="flex gap-2">
-                  {currentPage > 1 && (
-                    <Button asChild variant="outline">
-                      <Link
-                        href={`/forms/${id}/submissions?page=${
-                          currentPage - 1
-                        }`}
-                      >
-                        Previous
-                      </Link>
-                    </Button>
-                  )}
-                  {currentPage < totalPages && (
-                    <Button asChild variant="outline">
-                      <Link
-                        href={`/forms/${id}/submissions?page=${
-                          currentPage + 1
-                        }`}
-                      >
-                        Next
-                      </Link>
-                    </Button>
-                  )}
-                </div>
+          <div className="mt-8">
+            {submissions.length === 0 ? (
+              <div className="bg-white rounded-lg border-2 border-dashed p-12 text-center">
+                <h2 className="text-xl font-semibold mb-2">
+                  No submissions yet
+                </h2>
+                <p className="text-zinc-600 mb-6">
+                  Submissions will appear here once users fill out your form
+                </p>
+                <Button asChild>
+                  <Link href={`/forms/${id}`}>
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    View Form
+                  </Link>
+                </Button>
               </div>
+            ) : (
+              <>
+                <SubmissionsRealTime
+                  formId={id}
+                  initialSubmissions={submissions}
+                  formFields={form.fields}
+                />
+
+                {totalPages > 1 && (
+                  <div className="mt-6 flex items-center justify-between">
+                    <div className="text-sm text-zinc-600">
+                      Page {currentPage} of {totalPages}
+                    </div>
+                    <div className="flex gap-2">
+                      {currentPage > 1 && (
+                        <Button asChild variant="outline">
+                          <Link
+                            href={`/forms/${id}/submissions?page=${
+                              currentPage - 1
+                            }`}
+                          >
+                            Previous
+                          </Link>
+                        </Button>
+                      )}
+                      {currentPage < totalPages && (
+                        <Button asChild variant="outline">
+                          <Link
+                            href={`/forms/${id}/submissions?page=${
+                              currentPage + 1
+                            }`}
+                          >
+                            Next
+                          </Link>
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
-          </>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   )

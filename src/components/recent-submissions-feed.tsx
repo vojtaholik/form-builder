@@ -1,9 +1,12 @@
 "use client"
 
 import { formatInTimeZone } from "date-fns-tz"
+import { AnimatePresence, motion } from "motion/react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import type { SubmissionNotification } from "@/lib/types"
+import { cn } from "@/lib/utils"
+import { Card, CardContent, CardDescription, CardTitle } from "./ui/card"
 
 interface RecentSubmission {
   id: string
@@ -79,9 +82,9 @@ export function RecentSubmissionsFeed() {
   }, [])
 
   return (
-    <div className="bg-white rounded-lg border p-6">
+    <section className="lg:col-span-4 ">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold">Recent Submissions</h2>
+        <h2 className="text-xl font-semibold">Recent Submissions</h2>
         <div className="flex items-center gap-2">
           <div
             className={`h-2 w-2 rounded-full ${
@@ -93,51 +96,74 @@ export function RecentSubmissionsFeed() {
           </span>
         </div>
       </div>
+      <div className="p-5 rounded-xl shadow-inner bg-muted ring-1 ring-border">
+        <div className="flex flex-col gap-2">
+          {submissions.length === 0 ? (
+            <p className="text-sm text-zinc-500 text-center py-8">
+              Waiting for new submissions...
+            </p>
+          ) : (
+            <div className="grid gap-3">
+              <AnimatePresence mode="popLayout" initial={false}>
+                {submissions.map((submission) => {
+                  const isNew = newSubmissionIds.has(submission.id)
 
-      {submissions.length === 0 ? (
-        <p className="text-sm text-zinc-500 text-center py-8">
-          Waiting for new submissions...
-        </p>
-      ) : (
-        <div className="space-y-2">
-          {submissions.map((submission) => {
-            const isNew = newSubmissionIds.has(submission.id)
-
-            return (
-              <Link
-                key={submission.id}
-                href={`/forms/${submission.formId}/submissions`}
-                className={`block p-3 rounded-lg border hover:border-zinc-400 transition-all duration-500 ${
-                  isNew
-                    ? "animate-[slideDown_0.3s_ease-out] bg-gradient-to-r from-green-50 to-transparent border-green-200"
-                    : "border-zinc-200"
-                }`}
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-zinc-900 truncate">
-                      {submission.formTitle}
-                    </p>
-                    <p className="text-xs text-zinc-500">
-                      {formatInTimeZone(
-                        submission.submittedAt,
-                        "UTC",
-                        "MMM d, yyyy HH:mm"
-                      )}{" "}
-                      UTC
-                    </p>
-                  </div>
-                  {isNew && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                      New
-                    </span>
-                  )}
-                </div>
-              </Link>
-            )
-          })}
+                  return (
+                    <motion.div
+                      layout
+                      key={submission.id}
+                      initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 30,
+                        mass: 1,
+                      }}
+                    >
+                      <Link href={`/forms/${submission.formId}/submissions`}>
+                        <Card
+                          className={cn(
+                            "hover:shadow-md transition-all duration-150",
+                            {
+                              "bg-gradient-to-r from-emerald-50 to-card border-emerald-200":
+                                isNew,
+                            }
+                          )}
+                        >
+                          <CardContent>
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex-1 min-w-0 ">
+                                <CardTitle className="truncate mb-1">
+                                  {submission.formTitle}
+                                </CardTitle>
+                                <CardDescription>
+                                  {formatInTimeZone(
+                                    submission.submittedAt,
+                                    "UTC",
+                                    "MMM d, yyyy HH:mm"
+                                  )}{" "}
+                                  UTC
+                                </CardDescription>
+                              </div>
+                              {isNew && (
+                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                  New
+                                </span>
+                              )}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    </motion.div>
+                  )
+                })}
+              </AnimatePresence>
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </section>
   )
 }

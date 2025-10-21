@@ -33,7 +33,9 @@ export async function getAllForms(): Promise<FormSchema[]> {
 
   const forms = await Promise.all(ids.map((id) => getForm(id)))
 
-  return forms.filter((f): f is FormSchema => f !== null)
+  return forms
+    .filter((f): f is FormSchema => f !== null)
+    .sort((a, b) => b.createdAt - a.createdAt)
 }
 
 // Submission operations

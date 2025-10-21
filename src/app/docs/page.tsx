@@ -6,7 +6,7 @@ import { CodeBlock } from "./code-block"
 
 export default async function DocsPage() {
   const forms = await getAllForms()
-  const exampleFormId = forms[0]?.id || "your-form-id"
+  const exampleFormId = forms[0]?.id || "contact-form~a3f9c2"
   const apiKey = "your-api-key"
 
   return (

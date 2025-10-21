@@ -95,7 +95,7 @@ export function FieldEditor({
   return (
     <AccordionItem
       value={field.id}
-      className={`transition-opacity border-0 ${
+      className={`transition-opacity border-0 [&[data-state="open"]_[data-slot="item"]]:rounded-b-none ${
         isDragging ? "opacity-50" : "opacity-100"
       }`}
       draggable
@@ -106,24 +106,27 @@ export function FieldEditor({
       <Item variant="outline" className="cursor-default">
         {/* Header - always visible */}
         <ItemMedia
-          variant="icon"
-          className="cursor-grab active:cursor-grabbing"
+          variant="default"
+          className="cursor-grab mt-0.5 active:cursor-grabbing"
         >
-          <GripVertical />
+          <GripVertical className="size-4" />
         </ItemMedia>
-
         <ItemContent className="flex-1">
           <AccordionTrigger className="py-0 hover:no-underline items-center w-full">
             <div className="flex flex-col items-start gap-1 w-full">
               <ItemTitle>
-                {field.label || "Untitled field"}
+                <span className="font-semibold">
+                  {field.label || "Untitled field"}
+                </span>
                 {field.required && (
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge variant="secondary" className="text-xs h-4.5">
                     Required
                   </Badge>
                 )}
               </ItemTitle>
-              <ItemDescription>{getFieldDescription()}</ItemDescription>
+              <ItemDescription className="text-xs">
+                {getFieldDescription()}
+              </ItemDescription>
             </div>
           </AccordionTrigger>
         </ItemContent>

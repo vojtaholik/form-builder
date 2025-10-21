@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { FormBuilder } from "@/components/form-builder"
 import { Button } from "@/components/ui/button"
+import { generateFormId } from "@/lib/utils"
 
 export default function NewFormPage() {
   const router = useRouter()
@@ -22,7 +23,7 @@ export default function NewFormPage() {
     }>
   }) => {
     const form = {
-      id: crypto.randomUUID(),
+      id: generateFormId(formData.title),
       ...formData,
       createdAt: Date.now(),
     }
