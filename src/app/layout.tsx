@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: `${process.env.VERCEL_PROJECT_PRODUCTION_URL}/card@2x.jpg`,
+        url: `card@2x.jpg`,
       },
     ],
     title: "Form Builder",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: [
       {
-        url: `${process.env.VERCEL_PROJECT_PRODUCTION_URL}/card@2x.jpg`,
+        url: `card@2x.jpg`,
       },
     ],
   },
