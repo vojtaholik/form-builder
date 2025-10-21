@@ -30,7 +30,8 @@ export default async function DocsPage() {
             <div className="bg-zinc-50 p-4 rounded-lg">
               <div className="font-mono text-sm">
                 <strong>Base URL:</strong>{" "}
-                {process.env.VERCEL_URL || "https://your-domain.com"}
+                {process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+                  "https://your-domain.com"}
               </div>
             </div>
           </section>
@@ -71,14 +72,16 @@ export default async function DocsPage() {
                   title="cURL"
                   language="bash"
                   code={`curl -X GET "${
-                    process.env.VERCEL_URL || "https://your-domain.com"
+                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+                    "https://your-domain.com"
                   }/api/forms"`}
                 />
                 <CodeBlock
                   title="JavaScript (fetch)"
                   language="javascript"
                   code={`fetch('${
-                    process.env.VERCEL_URL || "https://your-domain.com"
+                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+                    "https://your-domain.com"
                   }/api/forms')
   .then(res => res.json())
   .then(data => console.log(data));`}
@@ -101,14 +104,16 @@ export default async function DocsPage() {
                   title="cURL"
                   language="bash"
                   code={`curl -X GET "${
-                    process.env.VERCEL_URL || "https://your-domain.com"
+                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+                    "https://your-domain.com"
                   }/api/forms/${exampleFormId}"`}
                 />
                 <CodeBlock
                   title="JavaScript (fetch)"
                   language="javascript"
                   code={`fetch('${
-                    process.env.VERCEL_URL || "https://your-domain.com"
+                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+                    "https://your-domain.com"
                   }/api/forms/${exampleFormId}')
   .then(res => res.json())
   .then(data => console.log(data));`}
@@ -138,14 +143,16 @@ export default async function DocsPage() {
                   title="cURL"
                   language="bash"
                   code={`curl -X GET "${
-                    process.env.VERCEL_URL || "https://your-domain.com"
+                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+                    "https://your-domain.com"
                   }/api/forms/${exampleFormId}/submissions?limit=20&offset=0"`}
                 />
                 <CodeBlock
                   title="JavaScript (fetch)"
                   language="javascript"
                   code={`fetch('${
-                    process.env.VERCEL_URL || "https://your-domain.com"
+                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+                    "https://your-domain.com"
                   }/api/forms/${exampleFormId}/submissions?limit=20&offset=0')
   .then(res => res.json())
   .then(data => console.log(data));`}
@@ -174,7 +181,8 @@ export default async function DocsPage() {
                   title="cURL"
                   language="bash"
                   code={`curl -X POST "${
-                    process.env.VERCEL_URL || "https://your-domain.com"
+                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+                    "https://your-domain.com"
                   }/api/forms/${exampleFormId}/submissions" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: ${apiKey}" \\
@@ -184,7 +192,8 @@ export default async function DocsPage() {
                   title="JavaScript (fetch)"
                   language="javascript"
                   code={`fetch('${
-                    process.env.VERCEL_URL || "https://your-domain.com"
+                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+                    "https://your-domain.com"
                   }/api/forms/${exampleFormId}/submissions', {
   method: 'POST',
   headers: {
