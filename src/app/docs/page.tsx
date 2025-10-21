@@ -5,6 +5,11 @@ export default async function DocsPage() {
   const forms = await getAllForms()
   const exampleFormId = forms[0]?.id || "contact-form~a3f9c2"
   const apiKey = "your-api-key"
+  const domain = process.env.VERCEL_PROJECT_PRODUCTION_URL?.startsWith(
+    "https://"
+  )
+    ? process.env.VERCEL_PROJECT_PRODUCTION_URL!
+    : `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL!}`
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -29,9 +34,7 @@ export default async function DocsPage() {
             </p>
             <div className="bg-zinc-50 p-4 rounded-lg">
               <div className="font-mono text-sm">
-                <strong>Base URL:</strong>{" "}
-                {process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-                  "https://your-domain.com"}
+                <strong>Base URL:</strong> {domain}
               </div>
             </div>
           </section>
@@ -71,18 +74,12 @@ export default async function DocsPage() {
                 <CodeBlock
                   title="cURL"
                   language="bash"
-                  code={`curl -X GET "${
-                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-                    "https://your-domain.com"
-                  }/api/forms"`}
+                  code={`curl -X GET "${domain}/api/forms"`}
                 />
                 <CodeBlock
                   title="JavaScript (fetch)"
                   language="javascript"
-                  code={`fetch('${
-                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-                    "https://your-domain.com"
-                  }/api/forms')
+                  code={`fetch('${domain}/api/forms')
   .then(res => res.json())
   .then(data => console.log(data));`}
                 />
@@ -103,18 +100,12 @@ export default async function DocsPage() {
                 <CodeBlock
                   title="cURL"
                   language="bash"
-                  code={`curl -X GET "${
-                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-                    "https://your-domain.com"
-                  }/api/forms/${exampleFormId}"`}
+                  code={`curl -X GET "${domain}/api/forms/${exampleFormId}"`}
                 />
                 <CodeBlock
                   title="JavaScript (fetch)"
                   language="javascript"
-                  code={`fetch('${
-                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-                    "https://your-domain.com"
-                  }/api/forms/${exampleFormId}')
+                  code={`fetch('${domain}/api/forms/${exampleFormId}')
   .then(res => res.json())
   .then(data => console.log(data));`}
                 />
@@ -142,18 +133,12 @@ export default async function DocsPage() {
                 <CodeBlock
                   title="cURL"
                   language="bash"
-                  code={`curl -X GET "${
-                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-                    "https://your-domain.com"
-                  }/api/forms/${exampleFormId}/submissions?limit=20&offset=0"`}
+                  code={`curl -X GET "${domain}/api/forms/${exampleFormId}/submissions?limit=20&offset=0"`}
                 />
                 <CodeBlock
                   title="JavaScript (fetch)"
                   language="javascript"
-                  code={`fetch('${
-                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-                    "https://your-domain.com"
-                  }/api/forms/${exampleFormId}/submissions?limit=20&offset=0')
+                  code={`fetch('${domain}/api/forms/${exampleFormId}/submissions?limit=20&offset=0')
   .then(res => res.json())
   .then(data => console.log(data));`}
                 />
@@ -180,10 +165,7 @@ export default async function DocsPage() {
                 <CodeBlock
                   title="cURL"
                   language="bash"
-                  code={`curl -X POST "${
-                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-                    "https://your-domain.com"
-                  }/api/forms/${exampleFormId}/submissions" \\
+                  code={`curl -X POST "${domain}/api/forms/${exampleFormId}/submissions" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: ${apiKey}" \\
   -d '{"field_id": "value"}'`}
@@ -191,10 +173,7 @@ export default async function DocsPage() {
                 <CodeBlock
                   title="JavaScript (fetch)"
                   language="javascript"
-                  code={`fetch('${
-                    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-                    "https://your-domain.com"
-                  }/api/forms/${exampleFormId}/submissions', {
+                  code={`fetch('${domain}/api/forms/${exampleFormId}/submissions', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
