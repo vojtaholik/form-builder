@@ -1,6 +1,3 @@
-import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { getAllForms } from "@/lib/redis"
 import { CodeBlock } from "./code-block"
 
@@ -11,15 +8,11 @@ export default async function DocsPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      <div className="container mx-auto py-12 px-4 max-w-4xl">
+      <div className="container mx-auto lg:py-10 py-5 px-4 max-w-4xl">
         <div className="mb-8">
-          <Button asChild variant="ghost" className="mb-4">
-            <Link href="/">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Forms
-            </Link>
-          </Button>
-          <h1 className="text-4xl font-bold mb-2">API Documentation</h1>
+          <h1 className="lg:text-4xl text-2xl font-bold mb-2">
+            API Documentation
+          </h1>
           <p className="text-zinc-600">
             Public API endpoints for external integrations
           </p>

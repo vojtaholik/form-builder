@@ -26,6 +26,10 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
   const [saving, setSaving] = useState(false)
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
   const [expandedFields, setExpandedFields] = useState<string[]>([])
+  const [errors, setErrors] = useState<{
+    title?: string
+    fields?: Record<string, string>
+  }>({})
 
   const addField = (type: FieldType) => {
     const newField: Field = {
@@ -44,6 +48,14 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
     const newFields = [...fields]
     newFields[index] = updatedField
     setFields(newFields)
+    // Clear error for this field when updated
+    if (errors.fields?.[updatedField.id]) {
+      setErrors((prev) => {
+        const newFieldErrors = { ...prev.fields }
+        delete newFieldErrors[updatedField.id]
+        return { ...prev, fields: newFieldErrors }
+      })
+    }
   }
 
   const deleteField = (index: number) => {
@@ -78,31 +90,49 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
   }
 
   const handleSave = async () => {
+    const newErrors: {
+      title?: string
+      fields?: Record<string, string>
+    } = {}
+
+    // Validate title
     if (!title.trim()) {
-      toast.error("Title is required")
-      return
+      newErrors.title = "Title is required"
     }
 
+    // Validate at least one field exists
     if (fields.length === 0) {
       toast.error("At least one field is required")
+      setErrors(newErrors)
       return
     }
 
-    // Validate all fields have labels
-    const invalidFields = fields.filter((f) => !f.label.trim())
-    if (invalidFields.length > 0) {
-      toast.error("All fields must have labels")
-      return
+    // Validate all fields have labels and radio/multi have options
+    const fieldErrors: Record<string, string> = {}
+    for (const field of fields) {
+      if (!field.label.trim()) {
+        fieldErrors[field.id] = "Field label is required"
+      } else if (
+        (field.type === "radio" || field.type === "multi") &&
+        (!field.options || field.options.length === 0)
+      ) {
+        fieldErrors[field.id] = "At least one option is required"
+      }
     }
 
-    // Validate radio/multi fields have options
-    const invalidOptions = fields.filter(
-      (f) =>
-        (f.type === "radio" || f.type === "multi") &&
-        (!f.options || f.options.length === 0)
-    )
-    if (invalidOptions.length > 0) {
-      toast.error("Radio and multi-select fields must have at least one option")
+    if (Object.keys(fieldErrors).length > 0) {
+      newErrors.fields = fieldErrors
+      // Expand fields with errors so user can see them
+      setExpandedFields([
+        ...new Set([...expandedFields, ...Object.keys(fieldErrors)]),
+      ])
+    }
+
+    if (
+      Object.keys(newErrors).length > 0 ||
+      Object.keys(fieldErrors).length > 0
+    ) {
+      setErrors(newErrors)
       return
     }
 
@@ -120,6 +150,8 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
           placeholder: f.placeholder,
         })),
       })
+      // Clear errors on successful save
+      setErrors({})
     } finally {
       setSaving(false)
     }
@@ -133,9 +165,19 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
           <Input
             id="title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value)
+              // Clear error when user starts typing
+              if (errors.title) {
+                setErrors((prev) => ({ ...prev, title: undefined }))
+              }
+            }}
             placeholder="Enter form title"
+            className={errors.title ? "border-red-500" : ""}
           />
+          {errors.title && (
+            <p className="text-sm text-red-500">{errors.title}</p>
+          )}
         </FieldContent>
 
         <FieldContent>
@@ -190,6 +232,7 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
                 isDragging={draggedIndex === index}
+                error={errors.fields?.[field.id]}
               />
             ))}
           </Accordion>

@@ -1,6 +1,7 @@
 import { Edit, ExternalLink, File, FileText, Plus } from "lucide-react"
 import Link from "next/link"
 import pluralize from "pluralize"
+import { DeleteFormButton } from "@/components/delete-form-button"
 import { RecentSubmissionsFeed } from "@/components/recent-submissions-feed"
 import { Button } from "@/components/ui/button"
 import {
@@ -80,6 +81,13 @@ export default async function Home() {
                               Submissions
                             </Link>
                           </Button>
+                          {process.env.NEXT_PUBLIC_ALLOW_FORM_DELETION ===
+                            "true" && (
+                            <DeleteFormButton
+                              formId={form.id}
+                              formTitle={form.title}
+                            />
+                          )}
                         </div>
                         <div className="flex text-sm items-center gap-2">
                           <span>

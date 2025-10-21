@@ -18,6 +18,25 @@ export async function updateForm(form: FormSchema): Promise<void> {
 }
 
 export async function deleteForm(id: string): Promise<void> {
+  // Get all submission IDs for this form
+  const submissionIds = await redis.zrange<string[]>(
+    `submission_ids:${id}`,
+    0,
+    -1
+  )
+
+  // Delete all submissions
+  if (submissionIds && submissionIds.length > 0) {
+    const submissionKeys = submissionIds.map(
+      (subId) => `submission:${id}:${subId}`
+    )
+    await redis.del(...submissionKeys)
+  }
+
+  // Delete the submission index
+  await redis.del(`submission_ids:${id}`)
+
+  // Delete the form itself
   await redis.del(`form:${id}`)
   await redis.srem("form_ids", id)
 }

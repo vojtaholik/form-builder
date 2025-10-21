@@ -13,6 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -75,7 +76,6 @@ export default function RootLayout({
                 <SheetContent>
                   <SheetHeader>
                     <SheetTitle>
-                      {" "}
                       <Link href="/" className="flex items-center gap-2">
                         <TextCursorInput className="size-5" />
                         <h1 className="md:text-2xl text-xl font-bold">
@@ -85,15 +85,19 @@ export default function RootLayout({
                     </SheetTitle>
                   </SheetHeader>
                   <div className="px-5 flex flex-col gap-2">
-                    <Button asChild>
-                      <Link href="/forms/new">
-                        <Plus className="h-4 w-4 mr-2" />
-                        Create New Form
-                      </Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                      <Link href="/docs">View API Documentation</Link>
-                    </Button>
+                    <SheetTrigger asChild>
+                      <Button asChild>
+                        <Link href="/forms/new">
+                          <Plus className="h-4 w-4 mr-2" />
+                          Create New Form
+                        </Link>
+                      </Button>
+                    </SheetTrigger>
+                    <SheetTrigger asChild>
+                      <Button asChild variant="outline">
+                        <Link href="/docs">View API Documentation</Link>
+                      </Button>
+                    </SheetTrigger>
                   </div>
                   <SheetFooter></SheetFooter>
                 </SheetContent>
@@ -101,7 +105,8 @@ export default function RootLayout({
             </nav>
           </div>
         </header>
-        {children}
+        <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   )

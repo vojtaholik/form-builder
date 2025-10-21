@@ -6,7 +6,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { FieldType } from "@/lib/types"
-import { FieldPreview } from "./field-preview"
 import {
   AccordionContent,
   AccordionItem,
@@ -41,6 +40,7 @@ interface FieldEditorProps {
   onDragOver: (e: React.DragEvent, index: number) => void
   onDrop: (e: React.DragEvent, index: number) => void
   isDragging: boolean
+  error?: string
 }
 
 export function FieldEditor({
@@ -52,6 +52,7 @@ export function FieldEditor({
   onDragOver,
   onDrop,
   isDragging,
+  error,
 }: FieldEditorProps) {
   const updateField = (updates: Partial<Field>) => {
     onUpdate({ ...field, ...updates })
@@ -151,6 +152,11 @@ export function FieldEditor({
       <AccordionContent className="border pt-4 -mt-4 rounded-lg px-4">
         <div className="">
           <div className="space-y-4">
+            {error && (
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-600">{error}</p>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               {/* <Badge>{field.type}</Badge> */}
             </div>
