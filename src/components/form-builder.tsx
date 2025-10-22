@@ -195,7 +195,7 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
       <div className="space-y-4">
         <div className="flex md:flex-row flex-col md:items-center gap-2 justify-between">
           <h3 className="text-lg font-semibold">Fields</h3>
-          <ButtonGroup>
+          <ButtonGroup className="sm:flex hidden">
             <Button variant="outline" onClick={() => addField("text")}>
               <Plus className="size-3" /> Text Input
             </Button>
@@ -203,6 +203,33 @@ export function FormBuilder({ initialForm, onSave }: FormBuilderProps) {
               <Plus className="size-3" /> Radio Buttons
             </Button>
             <Button variant="outline" onClick={() => addField("multi")}>
+              <Plus className="size-3" /> Multi-select
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup
+            className="sm:hidden flex w-full"
+            orientation={"vertical"}
+          >
+            <Button
+              variant="outline"
+              className="justify-start"
+              onClick={() => addField("text")}
+            >
+              <Plus className="size-3" />
+              Text Input
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-start"
+              onClick={() => addField("radio")}
+            >
+              <Plus className="size-3" /> Radio Buttons
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-start"
+              onClick={() => addField("multi")}
+            >
               <Plus className="size-3" /> Multi-select
             </Button>
           </ButtonGroup>

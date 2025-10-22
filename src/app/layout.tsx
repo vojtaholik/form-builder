@@ -68,7 +68,7 @@ export default function RootLayout({
                 <TextCursorInput className="size-5" />
                 <h1 className="md:text-2xl text-xl font-bold">Form Builder</h1>
               </Link>
-              <p className="text-zinc-600 md:text-sm text-xs truncate">
+              <p className="text-zinc-600 md:text-sm text-xs truncate sm:inline-block hidden">
                 Create, manage, and collect submissions from your forms.
               </p>
             </div>
